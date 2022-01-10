@@ -1,8 +1,7 @@
 // delete this console message before finishing
 console.log("logging this message to the console");
 
-
-// function fight
+// function to fight
 var fight = function(enemy) {
     
     while (playerInfo.health > 0 && enemy.health > 0) {
@@ -66,22 +65,20 @@ var fight = function(enemy) {
 // function to start a new game
 var startGame = function () {
 
-  // start debugger here?
-  debugger;
-
-  // reset player stats
+   // reset player stats
   playerInfo.reset();
 
   for (let i = 0; i < enemyInfo.length; i++) {
       if (playerInfo.health > 0) {
-          // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
+          
+        // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
           window.alert("startGame() msg: Welcome to Robot Gladiators! Round " + (i + 1));
-      
+          
           // pick new enemy to fight based on the index of the enemyNames array
           var pickedEnemyObj = enemyInfo[i];
       
           // reset enemyHealth before starting new fight
-          pickedEnemyObj.health = randomNumber(40,60);
+          pickedEnemyObj.health = randomNumber(15,20);
       
           // use debugger to pause script from running and check what's going on at that moment in the code
           // debugger;
@@ -107,7 +104,6 @@ var startGame = function () {
 
   // after the loop ends, player is either out of health or enemies to fight, so run the endGame function
   endGame();
-
 }
 
 
@@ -170,11 +166,20 @@ var randomNumber = function(min, max) {
   return value;
 };
 
+var getPlayerName = function () {
+  var name = "";
+  // add loop her with prompt and condition
+  while (name === "" || name === null) {
+    name = window.prompt("What is your robot's name?");
+  }
+  console.log("Your robot's name is " + name);
+  return name;
+}
 
-
+/* GAME INFORMATION / VARIABLES */
 var playerInfo = {
-  name: window.prompt("What is your robot's name?"),
-  health: 100,
+  name: getPlayerName(),
+  health: 50,
   attack: 10,
   money: 10,
   reset: function() {

@@ -28,41 +28,50 @@ var fightOrSkip = function() {
 
 // function to fight
 var fight = function(enemy) {
-  // repeat and execute as long as the enemy-robot is alive
+  // keep track of who goes first
+  var isPlayerTurn = true;
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
+  // repeat and execute as long as the enemy-robot and player-robot is alive
   while (playerInfo.health > 0 && enemy.health > 0) {
-    if(fightOrSkip()) {
-      // if fightOrSkip() returns true, leave fight by breaking loop
-      break;
-    };
-    // generate random damage value based on player's attack power
-    var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-    // remove enemy's health by subtracting the amount set in the playerAttack variable
-    enemy.health = Math.max(0, enemy.health - damage);
-    console.log('fight() msg: ' + playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.');
-    // check enemy's health
-    if (enemy.health <= 0) {
-      window.alert('fight() msg: ' + enemy.name + ' has died!');
-      // award player money for winning
-      playerInfo.money = playerInfo.money + 20;
-      console.log('fight() msg: ' + playerInfo.name + '\'s money increased by 20 and is now ' + playerInfo.money);
-      // leave while() loop since enemy is dead
-      break;
+    if (isPlayerTurn) {
+      if (fightOrSkip()) {
+        // if fightOrSkip() returns true, leave fight by breaking loop. You also leave the fight() function.
+        break;
+      };
+      // generate random damage value based on player's attack power
+      var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+      // remove enemy's health by subtracting the amount set in the playerAttack variable
+      enemy.health = Math.max(0, enemy.health - damage);
+      console.log('fight() msg: ' + playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.');
+      // check enemy's health
+      if (enemy.health <= 0) {
+        window.alert('fight() msg: ' + enemy.name + ' has died!');
+        // award player money for winning
+        playerInfo.money = playerInfo.money + 20;
+        console.log('fight() msg: ' + playerInfo.name + '\'s money is increased by 20 and is now ' + playerInfo.money);
+        // leave while() loop since enemy is dead
+        break;
+      } else {
+        window.alert('fight() msg: ' + enemy.name + ' still has ' + enemy.health + ' health left.');
+      }
     } else {
-      window.alert('fight() msg: ' + enemy.name + ' still has ' + enemy.health + ' health left.');
+      // generate random damage value based on enemy's attack power
+      var damage = randomNumber(enemy.attack - 3, enemy.attack);
+      // remove players's health by subtracting the amount set in the enemyAttack variable
+      playerInfo.health = Math.max(0, playerInfo.health - damage);
+      console.log('fight() msg: ' + enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' now has ' + playerInfo.health + ' health remaining.');
+      // check player's health
+      if (playerInfo.health <= 0) {
+        window.alert(playerInfo.name + ' has died!');
+        // leave while() loop if player is dead
+        break;
+      } else {
+        window.alert('fight() msg: ' + playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
+      }      
     }
-    //generate random damage value based on player's attack power
-    var damage = randomNumber(enemy.attack - 3, enemy.attack);
-    // remove players's health by subtracting the amount set in the enemyAttack variable
-    playerInfo.health = Math.max(0, playerInfo.health - damage);
-    console.log('fight() msg: ' + enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' now has ' + playerInfo.health + ' health remaining.');
-    // check player's health
-    if (playerInfo.health <= 0) {
-      window.alert(playerInfo.name + ' has died!');
-      // leave while() loop if player is dead
-      break;
-    } else {
-      window.alert('fight() msg: ' + playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
-    }
+    isPlayerTurn = !isPlayerTurn;
   } //end while loop
 };
 

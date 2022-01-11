@@ -79,7 +79,7 @@ var startGame = function () {
       // reset enemyHealth before starting new fight
       pickedEnemyObj.health = randomNumber(15,20);
       // use debugger to pause script from running and check what's going on at that moment in the code
-      debugger;
+      // debugger;
       // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
       fight(pickedEnemyObj);
       // if player is still alive and we're not at the last enemy in the array
@@ -125,31 +125,28 @@ var endGame = function() {
 
 // function to shop for things i.e. more health, attack power, etc.
 var shop = function() {
-
-    // ask player what they'd like to do
-    var shopOptionPrompt = window.prompt(
-      "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
-    );
-
-    // use switch to carry out action
-    switch (shopOptionPrompt) {
-      case "REFILL":
-      case "refill":
-        playerInfo.refillHealth();
-        break;
-      case "UPGRADE":
-      case "upgrade":
-        playerInfo.upgradeAttack();
-        break;
-      case "LEAVE": // new case
-      case "leave":
-        window.alert("Leaving the store.");
-        break;
-      default:
-        window.alert("You did not pick a valid option. Try again.");
-        shop();
-        break;
-    }
+  // ask player what they'd like to do
+  var shopOptionPrompt = window.prompt(
+    "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
+  );
+  shopOptionPrompt = parseInt(shopOptionPrompt);
+  // debugger;
+  // use switch to carry out action
+  switch (shopOptionPrompt) {
+    case 1:
+      playerInfo.refillHealth();
+      break;
+    case 2:
+      playerInfo.upgradeAttack();
+      break;
+    case 3: // new case
+      window.alert("Leaving the store.");
+      break;
+    default:
+      window.alert("You did not pick a valid option. Try again.");
+      shop();
+      break;
+  }
 }
 
 // function to generate a random numeric value
